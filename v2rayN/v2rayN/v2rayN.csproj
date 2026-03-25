@@ -8,7 +8,8 @@
 		<ApplicationIcon>Resources\v2rayN.ico</ApplicationIcon>
 		<ApplicationManifest>app.manifest</ApplicationManifest>
 		<SupportedOSPlatformVersion>7.0</SupportedOSPlatformVersion>
-	</PropertyGroup>
+        <OutDir Condition="'$(Configuration)'=='Release'">..\bin\Release\v2rayN-XRay-Gen</OutDir>
+    </PropertyGroup>
 
 	<ItemGroup>
 		<PackageReference Include="MaterialDesignThemes" />

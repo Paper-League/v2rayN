@@ -1553,7 +1553,7 @@ public static class ConfigHandler
                     var result = await CoreConfigHandler.GenerateClientConfig(allResult.ResolvedMainContext, Path.Combine(outputDirectory, $"ProfileItemConfig_{i}.json"));
                 }
 
-                Environment.Exit(1);
+                Environment.Exit(0);
             }
             else
             {

@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "v2rayN": {
+      "commandName": "Project",
+      "commandLineArgs": "--gen-only \"C:\\b64subscription_content.txt\""
+    }
+  }
+}

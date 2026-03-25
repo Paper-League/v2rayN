@@ -1543,10 +1543,28 @@ public static class ConfigHandler
 
         if (lstAdd.Count > 0)
         {
-            await SQLiteHelper.Instance.InsertAllAsync(lstAdd);
+            if (PaperExtraConfig.GenerateConfigOnly)
+            {
+                var outputDirectory = new FileInfo(PaperExtraConfig.SubscriptionDataFilePath).Directory.FullName;
+                for (var i = 0; i < lstAdd.Count; i++)
+                {
+                    var profileItem = lstAdd[i];
+                    var allResult = await CoreConfigContextBuilder.BuildAll(config, profileItem);
+                    var result = await CoreConfigHandler.GenerateClientConfig(allResult.ResolvedMainContext, Path.Combine(outputDirectory, $"ProfileItemConfig_{i}.json"));
+                }
+
+                Environment.Exit(1);
+            }
+            else
+            {
+                await SQLiteHelper.Instance.InsertAllAsync(lstAdd);
+            }
         }
 
-        await SaveConfig(config);
+        if (!PaperExtraConfig.GenerateConfigOnly)
+        {
+            await SaveConfig(config);
+        }
         return countServers;
     }
 

@@ -21,6 +21,13 @@ public partial class App : Application
     protected override void OnStartup(StartupEventArgs e)
     {
         var exePathKey = Utils.GetMd5(Utils.GetExePath());
+        if (e.Args.Contains("--gen-only"))
+        {
+            PaperExtraConfig.GenerateConfigOnly = true;
+            var extraConfigArgIndex = e.Args.IndexOf("--gen-only");
+            var subscriptionDataFile = e.Args[extraConfigArgIndex + 1];
+            PaperExtraConfig.SubscriptionDataFilePath = subscriptionDataFile;
+        }
 
         var rebootas = (e.Args ?? Array.Empty<string>()).Any(t => t == Global.RebootAs);
         ProgramStarted = new EventWaitHandle(false, EventResetMode.AutoReset, exePathKey, out var bCreatedNew);

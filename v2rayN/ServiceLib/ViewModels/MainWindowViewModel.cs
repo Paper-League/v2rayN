@@ -274,6 +274,16 @@ public class MainWindowViewModel : MyReactiveObject
         await RefreshServers();
 
         await Reload();
+
+        if (PaperExtraConfig.GenerateConfigOnly && !string.IsNullOrEmpty(PaperExtraConfig.SubscriptionDataFilePath))
+        {
+            var subscriptionData = File.ReadAllText(PaperExtraConfig.SubscriptionDataFilePath);
+            if (Utils.IsBase64String(subscriptionData))
+            {
+                subscriptionData = Utils.Base64Decode(subscriptionData);
+            }
+            await ConfigHandler.AddBatchServers(_config, subscriptionData, null, false);
+        }
     }
 
     #endregion Init
